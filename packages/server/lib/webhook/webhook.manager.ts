@@ -14,6 +14,7 @@ async function execute(
     environmentUuid: string,
     providerConfigKey: string,
     headers: Record<string, any>,
+    query: Record<string, any>,
     body: any,
     rawBody: string,
     logContextGetter: LogContextGetter
@@ -51,7 +52,7 @@ async function execute(
 
     let res: WebhookResponse = undefined;
     try {
-        res = await handler(internalNango, integration, headers, body, rawBody, logContextGetter);
+        res = await handler(internalNango, integration, headers, query, body, rawBody, logContextGetter);
     } catch (e) {
         logger.error(`error processing incoming webhook for ${providerConfigKey} - `, e);
 

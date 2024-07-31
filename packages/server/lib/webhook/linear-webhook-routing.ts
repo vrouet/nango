@@ -23,7 +23,7 @@ function validate(integration: ProviderConfig, headerSignature: string, rawBody:
     return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(headerSignature));
 }
 
-const route: WebhookHandler = async (nango, integration, headers, body, rawBody, logContextGetter: LogContextGetter) => {
+const route: WebhookHandler = async (nango, integration, headers, query, body, rawBody, logContextGetter: LogContextGetter) => {
     const signature = headers['linear-signature'];
 
     logger.info('received', { configId: integration.id });
@@ -36,7 +36,7 @@ const route: WebhookHandler = async (nango, integration, headers, body, rawBody,
     const parsedBody = body as LinearBody;
     logger.info(`valid ${parsedBody.type}`, { configId: integration.id });
 
-    const response = await nango.executeScriptForWebhooks(integration, parsedBody, 'type', 'organizationId', logContextGetter, 'organizationId');
+    const response = await nango.executeScriptForWebhooks(integration, query, parsedBody, 'type', 'organizationId', logContextGetter, 'organizationId');
 
     return { parsedBody, connectionIds: response?.connectionIds || [] };
 };

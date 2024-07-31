@@ -8,6 +8,7 @@ export interface InternalNango {
     getWebhooks: (environment_id: number, nango_config_id: number) => Promise<SyncConfig[]>;
     executeScriptForWebhooks(
         integration: ProviderConfig,
+        query: Record<string, any>,
         body: any,
         webhookType: string,
         connectionIdentifier: string,
@@ -22,13 +23,15 @@ export const internalNango: InternalNango = {
     },
     executeScriptForWebhooks: async (
         integration,
+        query,
         body,
         webhookType,
         connectionIdentifier,
         logContextGetter,
         propName
     ): Promise<{ connectionIds: string[] }> => {
-        if (!get(body, connectionIdentifier)) {
+        const identifier = get(body, connectionIdentifier) || get(query, connectionIdentifier);
+        if (!identifier) {
             await telemetry.log(
                 LogTypes.INCOMING_WEBHOOK_ISSUE_WRONG_CONNECTION_IDENTIFIER,
                 'Incoming webhook had the wrong connection identifier',
@@ -47,11 +50,7 @@ export const internalNango: InternalNango = {
 
         let connections: Connection[] | null = null;
         if (propName === 'connectionId') {
-            const { success, response: connection } = await connectionService.getConnection(
-                get(body, connectionIdentifier),
-                integration.unique_key,
-                integration.environment_id
-            );
+            const { success, response: connection } = await connectionService.getConnection(identifier, integration.unique_key, integration.environment_id);
 
             if (success && connection) {
                 connections = [connection];
@@ -59,7 +58,7 @@ export const internalNango: InternalNango = {
         } else {
             connections = await connectionService.findConnectionsByConnectionConfigValue(
                 propName || connectionIdentifier,
-                get(body, connectionIdentifier),
+                identifier,
                 integration.environment_id
             );
         }

@@ -19,7 +19,7 @@ export function validate(integration: ProviderConfig, headers: Record<string, an
     return crypto.timingSafeEqual(signatureBuffer, hashBuffer);
 }
 
-const route: WebhookHandler = async (nango, integration, headers, body, _rawBody, logContextGetter: LogContextGetter) => {
+const route: WebhookHandler = async (nango, integration, headers, query, body, _rawBody, logContextGetter: LogContextGetter) => {
     const valid = validate(integration, headers, body);
 
     if (!valid) {
@@ -43,7 +43,7 @@ const route: WebhookHandler = async (nango, integration, headers, body, _rawBody
             });
 
             for (const event of sorted) {
-                const response = await nango.executeScriptForWebhooks(integration, event, 'subscriptionType', 'portalId', logContextGetter);
+                const response = await nango.executeScriptForWebhooks(integration, query, event, 'subscriptionType', 'portalId', logContextGetter);
                 if (response && response.connectionIds?.length > 0) {
                     connectionIds = connectionIds.concat(response.connectionIds);
                 }
@@ -52,7 +52,7 @@ const route: WebhookHandler = async (nango, integration, headers, body, _rawBody
 
         return { connectionIds };
     } else {
-        return nango.executeScriptForWebhooks(integration, body, 'subscriptionType', 'portalId', logContextGetter);
+        return nango.executeScriptForWebhooks(integration, query, body, 'subscriptionType', 'portalId', logContextGetter);
     }
 };
 
