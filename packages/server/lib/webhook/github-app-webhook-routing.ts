@@ -19,7 +19,7 @@ function validate(integration: ProviderConfig, headerSignature: string, body: an
     return crypto.timingSafeEqual(trusted, untrusted);
 }
 
-const route: WebhookHandler = async (nango, integration, headers, body, _rawBody, logContextGetter: LogContextGetter) => {
+const route: WebhookHandler = async (nango, integration, headers, query, body, _rawBody, logContextGetter: LogContextGetter) => {
     const signature = headers['x-hub-signature-256'];
 
     if (signature) {
@@ -32,7 +32,7 @@ const route: WebhookHandler = async (nango, integration, headers, body, _rawBody
         }
     }
 
-    return nango.executeScriptForWebhooks(integration, body, 'action', 'installation.id', logContextGetter, 'installation_id');
+    return nango.executeScriptForWebhooks(integration, query, body, 'action', 'installation.id', logContextGetter, 'installation_id');
 };
 
 export default route;

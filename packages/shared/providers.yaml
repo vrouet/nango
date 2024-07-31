@@ -2650,6 +2650,7 @@ stripe-app:
         base_url: https://api.stripe.com
     refresh_params:
         grant_type: refresh_token
+    webhook_routing_script: stripeAppWebhookRouting
     docs: https://docs.nango.dev/integrations/all/stripe-app
 stripe-app-sandbox:
     auth_mode: OAUTH2
@@ -2660,6 +2661,7 @@ stripe-app-sandbox:
         base_url: https://api.stripe.com
     refresh_params:
         grant_type: refresh_token
+    webhook_routing_script: stripeAppWebhookRouting
     docs: https://docs.nango.dev/integrations/all/stripe-app
 survey-monkey:
     categories:

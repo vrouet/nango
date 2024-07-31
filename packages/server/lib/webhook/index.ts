@@ -6,4 +6,5 @@ export { default as linearWebhookRouting } from './linear-webhook-routing.js';
 export { default as salesforceWebhookRouting } from './salesforce-webhook-routing.js';
 export { default as slackWebhookRouting } from './slack-webhook-routing.js';
 export { default as checkrWebhookRouting } from './checkr-webhook-routing.js';
+export { default as stripeAppWebhookRouting } from './stripe-app-webhook-routing.js';
 export * from './types.js';

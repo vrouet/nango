@@ -95,8 +95,17 @@ describe('Webhook route unit tests', () => {
         const combinedSignature = `${integration.oauth_client_secret}${JSON.stringify(body)}`;
         const createdHash = crypto.createHash('sha256').update(combinedSignature).digest('hex');
         const headers = { 'x-hubspot-signature': createdHash };
+        const query = {};
 
-        await HubspotWebhookRouting.default(nangoMock as unknown as Nango, integration as ProviderConfig, headers, body, body.toString(), logContextGetter);
+        await HubspotWebhookRouting.default(
+            nangoMock as unknown as Nango,
+            integration as ProviderConfig,
+            headers,
+            query,
+            body,
+            body.toString(),
+            logContextGetter
+        );
 
         expect(nangoMock.executeScriptForWebhooks).toHaveBeenCalledTimes(body.length);
 
@@ -148,8 +157,17 @@ describe('Webhook route unit tests', () => {
         const combinedSignature = `${integration.oauth_client_secret}${JSON.stringify(body)}`;
         const createdHash = crypto.createHash('sha256').update(combinedSignature).digest('hex');
         const headers = { 'x-hubspot-signature': createdHash };
+        const query = {};
 
-        await HubspotWebhookRouting.default(nangoMock as unknown as Nango, integration as ProviderConfig, headers, body, body.toString(), logContextGetter);
+        await HubspotWebhookRouting.default(
+            nangoMock as unknown as Nango,
+            integration as ProviderConfig,
+            headers,
+            query,
+            body,
+            body.toString(),
+            logContextGetter
+        );
 
         expect(nangoMock.executeScriptForWebhooks).toHaveBeenCalledTimes(body.length);
 

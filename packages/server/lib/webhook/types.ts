@@ -6,6 +6,7 @@ export type WebhookHandler = (
     internalNango: InternalNango,
     integration: ProviderConfig,
     headers: Record<string, any>,
+    query: Record<string, any>,
     body: any,
     rawBody: string,
     logContextGetter: LogContextGetter

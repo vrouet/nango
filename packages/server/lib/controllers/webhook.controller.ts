@@ -43,7 +43,7 @@ class WebhookController {
 
             if (areWebhooksEnabled) {
                 const startTime = Date.now();
-                responsePayload = await routeWebhook(environmentUuid, providerConfigKey, headers, req.body, req.rawBody!, logContextGetter);
+                responsePayload = await routeWebhook(environmentUuid, providerConfigKey, headers, req.query, req.body, req.rawBody!, logContextGetter);
                 const endTime = Date.now();
                 const totalRunTime = (endTime - startTime) / 1000;
 
