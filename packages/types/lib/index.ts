@@ -26,6 +26,7 @@ export type * from './scripts/post-connection/db.js';
 export type * from './scripts/syncs/api.js';
 export type * from './notification/active-logs/db.js';
 export type * from './connection/api/get.js';
+export type * from './integration/api.js';
 export type * from './integration/db.js';
 export type * from './integration/template.js';
 export type * from './auth/api.js';
@@ -42,3 +43,4 @@ export type * from './webhooks/api.js';
 export type * from './flow/http.api.js';
 
 export type * from './utils.js';
+export type * from './web/env.js';
